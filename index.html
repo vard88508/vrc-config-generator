@@ -15,7 +15,7 @@
     </style> 
     <h1>config.json generator for VRChat</h1>
     <h3>For more info please visit <a href="https://docs.vrchat.com/docs/configuration-file" target="_blank">VRChat's Configuration File docs</a></h3>
-    <h3>Leave fields empty for default values</h3>
+    <h3>Leave fields empty for VRChat's default values</h3>
     <p>Discord rich presence: <input id="disableRichPresence" type="checkbox" checked="true"></p>
     <p>Cache directory path: <input id="cache_directory" type="text" placeholder="C:\VRCCache"></p>
     <p>Max cache size (in GB): <input id="cache_size" type="number" placeholder="from 20 to 900, Default 20"></p>
@@ -26,19 +26,20 @@
     <p>Screenshot resolution width: <input id="screenshot_res_width" type="number" placeholder="from 1280 to 3840"></p>
     <p>Steadycam FOV: <input id="fpv_steadycam_fov" type="number" placeholder="from 30 to 110, Default 55"></p>
     <input id="generate" type="button" value="Generate config.json" />
+    <h4>I'm sure this page could be easier to read and more pleasant to watch. <a href="https://github.com/vard88508/vrc-config-generator" target="_blank">Contribute on github</a></h4>
     <script>
         //don't blame me for my code ;C i'm still learning js. contribute the proper way <3
         document.getElementById("generate").onclick = () => {
             const config = {
                 disableRichPresence: !document.getElementById('disableRichPresence').checked,
                 cache_directory: document.getElementById('cache_directory').value,
-                cache_size: document.getElementById('cache_size').value,
-                cache_expiry_delay: document.getElementById('cache_expiry_delay').value,
-                camera_res_height: document.getElementById('camera_res_height').value,
-                camera_res_width: document.getElementById('camera_res_width').value,
-                screenshot_res_height: document.getElementById('screenshot_res_height').value,
-                screenshot_res_width: document.getElementById('screenshot_res_width').value,
-                fpv_steadycam_fov: document.getElementById('fpv_steadycam_fov').value
+                cache_size: Number(document.getElementById('cache_size').value),
+                cache_expiry_delay: Number(document.getElementById('cache_expiry_delay').value),
+                camera_res_height: Number(document.getElementById('camera_res_height').value),
+                camera_res_width: Number(document.getElementById('camera_res_width').value),
+                screenshot_res_height: Number(document.getElementById('screenshot_res_height').value),
+                screenshot_res_width: Number(document.getElementById('screenshot_res_width').value),
+                fpv_steadycam_fov: Number(document.getElementById('fpv_steadycam_fov').value)
             }
             if(config.disableRichPresence === false) { config.disableRichPresence = "" }
             if (config.cache_size && (config.cache_size < 20 || config.cache_size > 900)) { alert('Wrong max cache size value. Min: 20, Max: 900')
@@ -72,14 +73,14 @@
             }
         }
         function generateFile(data) {
-        const element = document.createElement('a')
-        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(data))
-        element.setAttribute('download', 'config.json')
-        element.style.display = 'none'
-        document.body.appendChild(element)
-        element.click();
-        document.body.removeChild(element)
-        }       
+            const element = document.createElement('a')
+            element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(data))
+            element.setAttribute('download', 'config.json')
+            element.style.display = 'none'
+            document.body.appendChild(element)
+            element.click();
+            document.body.removeChild(element)
+        }
     </script>
 </body>
 </html>
