@@ -18,8 +18,8 @@
     <h3>Leave fields empty for VRChat's default values</h3>
     <p>Discord rich presence: <input id="disableRichPresence" type="checkbox" checked="true"></p>
     <p>Cache directory path: <input id="cache_directory" type="text" placeholder="C:\VRCCache"></p>
-    <p>Max cache size (in GB): <input id="cache_size" type="number" placeholder="from 20 to 900, Default 20"></p>
-    <p>Cache expiry time (in days): <input id="cache_expiry_delay" type="number" placeholder="from 30 to 3650, Def 30"></p>
+    <p>Max cache size (in GB): <input id="cache_size" type="number" placeholder="from 20, Default 20"></p>
+    <p>Cache expiry time (in days): <input id="cache_expiry_delay" type="number" placeholder="from 30, Default 30"></p>
     <p>Camera resolution height: <input id="camera_res_height" type="number" placeholder="from 720 to 2160"></p>
     <p>Camera resolution width: <input id="camera_res_width" type="number" placeholder="from 1280 to 3840"></p>
     <p>Screenshot resolution height: <input id="screenshot_res_height" type="number" placeholder="from 720 to 2160"></p>
@@ -43,11 +43,11 @@
                 fpv_steadycam_fov: Number(document.getElementById('fpv_steadycam_fov').value)
             }
             if(config.disableRichPresence === false) { config.disableRichPresence = "" }
-            if (config.cache_size && (config.cache_size < 20 || config.cache_size > 900)) { alert('Wrong max cache size value. Min: 20, Max: 900')
+            if (config.cache_size && (config.cache_size < 20)) { alert('Wrong max cache size value. Min: 20')
                 return
             // } else if (config.cache_directory) { //would be cool having some kind of regex check
             //     return
-            } else if (config.cache_expiry_delay && (config.cache_expiry_delay < 30 || config.cache_expiry_delay > 3650)) { alert('Wrong cache expiry time. Min 30, Max 3650')
+            } else if (config.cache_expiry_delay && (config.cache_expiry_delay < 30)) { alert('Wrong cache expiry time. Min 30')
                 return
             } else if (config.camera_res_height && (config.camera_res_height < 720 || config.camera_res_height > 2160)) { alert('Wrong camera resolution height value. Min 720, Max 2160')
                 return
