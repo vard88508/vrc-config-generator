@@ -60,7 +60,7 @@
                 return
             } else {
                 Object.keys(config).forEach(i => {
-                    if (config[i] === "") {
+                    if (config[i] === "" || config[i] === 0) {
                         delete config[i]
                     }
                 })
