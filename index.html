@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRChat config.json generator</title>
+</head>
+<body>
+    <style>
+        :root { 
+            color: rgb(31 41 55);
+            font-family: system-ui;
+        }
+    </style> 
+    <h1>config.json generator for VRChat</h1>
+    <h3>For more info please visit <a href="https://docs.vrchat.com/docs/configuration-file" target="_blank">VRChat's Configuration File docs</a></h3>
+    <h3>Leave fields empty for default values</h3>
+    <p>Discord rich presence: <input id="disableRichPresence" type="checkbox" checked="true"></p>
+    <p>Cache directory path: <input id="cache_directory" type="text" placeholder="C:\VRCCache"></p>
+    <p>Max cache size (in GB): <input id="cache_size" type="number" placeholder="from 20 to 900, Default 20"></p>
+    <p>Cache expiry time (in days): <input id="cache_expiry_delay" type="number" placeholder="from 30 to 3650, Def 30"></p>
+    <p>Camera resolution height: <input id="camera_res_height" type="number" placeholder="from 720 to 2160"></p>
+    <p>Camera resolution width: <input id="camera_res_width" type="number" placeholder="from 1280 to 3840"></p>
+    <p>Screenshot resolution height: <input id="screenshot_res_height" type="number" placeholder="from 720 to 2160"></p>
+    <p>Screenshot resolution width: <input id="screenshot_res_width" type="number" placeholder="from 1280 to 3840"></p>
+    <p>Steadycam FOV: <input id="fpv_steadycam_fov" type="number" placeholder="from 30 to 110, Default 55"></p>
+    <input id="generate" type="button" value="Generate config.json" />
+    <script>
+        //don't blame me for my code ;C i'm still learning js. contribute the proper way <3
+        document.getElementById("generate").onclick = () => {
+            const config = {
+                disableRichPresence: !document.getElementById('disableRichPresence').checked,
+                cache_directory: document.getElementById('cache_directory').value,
+                cache_size: document.getElementById('cache_size').value,
+                cache_expiry_delay: document.getElementById('cache_expiry_delay').value,
+                camera_res_height: document.getElementById('camera_res_height').value,
+                camera_res_width: document.getElementById('camera_res_width').value,
+                screenshot_res_height: document.getElementById('screenshot_res_height').value,
+                screenshot_res_width: document.getElementById('screenshot_res_width').value,
+                fpv_steadycam_fov: document.getElementById('fpv_steadycam_fov').value
+            }
+            if(config.disableRichPresence === false) { config.disableRichPresence = "" }
+            if (config.cache_size && (config.cache_size < 20 || config.cache_size > 900)) { alert('Wrong max cache size value. Min: 20, Max: 900')
+                return
+            // } else if (config.cache_directory) { //would be cool having some kind of regex check
+            //     return
+            } else if (config.cache_expiry_delay && (config.cache_expiry_delay < 30 || config.cache_expiry_delay > 3650)) { alert('Wrong cache expiry time. Min 30, Max 3650')
+                return
+            } else if (config.camera_res_height && (config.camera_res_height < 720 || config.camera_res_height > 2160)) { alert('Wrong camera resolution height value. Min 720, Max 2160')
+                return
+            } else if (config.camera_res_width && (config.camera_res_width < 1280 || config.camera_res_width > 3840)) { alert('Wrong camera resolution width value. Min 1280, Max 3840')
+                return
+            } else if (config.screenshot_res_height && (config.screenshot_res_height < 720 || config.screenshot_res_height > 2160)) { alert('Wrong screenshot resolution height value. Min 720, Max 2160')
+                return
+            } else if (config.screenshot_res_width && (config.screenshot_res_width < 1280 || config.screenshot_res_width > 3840)) { alert('Wrong screenshot resolution width value. Min 1280, Max 3840')
+                return
+            } else if (config.fpv_steadycam_fov && (config.fpv_steadycam_fov < 30 || config.fpv_steadycam_fov > 110)) { alert('Wrong Steadycam FOV value. Min 30, Max 110')
+                return
+            } else {
+                Object.keys(config).forEach(i => {
+                    if (config[i] === "") {
+                        delete config[i]
+                    }
+                })
+                if (Object.keys(config).length === 0) {
+                    alert("You didn't change anything :/")
+                    return
+                } else {
+                    generateFile(JSON.stringify(config, null, 2))
+                }
+            }
+        }
+        function generateFile(data) {
+        const element = document.createElement('a')
+        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(data))
+        element.setAttribute('download', 'config.json')
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click();
+        document.body.removeChild(element)
+        }       
+    </script>
+</body>
+</html>
